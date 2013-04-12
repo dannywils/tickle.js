@@ -10,7 +10,9 @@
 		}, options);
 
 		function angleDiff(a,b){
-			var diff = Math.atan2(Math.sin(a - b), Math.cos(a - b)) * (180/Math.PI);
+			var d = Math.abs(a - b) % 360;
+			var r = d > 180 ? 360 - d : d;
+			var diff = r;
 			return Math.abs(diff);
 		}
 
@@ -72,6 +74,7 @@
 
 	oldx=e.pageX;
 	oldy=e.pageY;
+	$("#count").text(count);
 	if (count > settings.count) {
 		handler.call(this, e);
 		reset();
