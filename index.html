@@ -20,14 +20,19 @@
 	<div class="row">
 		<div class="large-12 columns">
 			<h1>Tickle Prototype</h1>
+			<h4 id="count"></h4>
 			<a href="#" id="reset" class="button">Reset</a>
+			<img src="elmo.gif" id="elmo" alt="Tickle me elmo!" />
 		</div>
-		<img src="elmo.gif" id="elmo" alt="Tickle me elmo!" />
+
 	</div>
 	<script>
 	$('#elmo').tickle(function(){
-		$(this).slideUp();
-	}, { time: 750, count: 7 });
+		$(this).slideUp(function(){
+			$("#count").text("Tickled!")
+		});
+
+	}, { time: 1000, count: 7 });
 
 	$('#reset').click(function(){
 		$('#elmo').slideDown();
