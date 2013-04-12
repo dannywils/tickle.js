@@ -22,10 +22,10 @@ $('element').tickle(callback, options);
 
 Tickle has two argument, the callback function, and an options object that allows you to customize:
 
-* angle: The amount in which the mouse must change it's angle in order to count as a direction change
-* count: The number of times the direction must change before the event is fired
-* time: The amount of time before the count is reset
-* canLeave: Determines if the mouse can leave the element and continue the count
+* angle: The amount in which the mouse must change it's angle in order to count as a direction change.
+* count: The number of times the direction must change before the event is fired.
+* time: The amount of time in milliseconds before the count is reset.
+* canLeave: Determines if the mouse can leave the element and continue the count.
 
 ```javascript
 $('#container').tickle(
@@ -34,7 +34,9 @@ $('#container').tickle(
   }, 
   { 
   time: 750,
-  count: 5 
+  count: 5,
+  time: 1000,
+  canLeave: false
   }
 );
 ```
