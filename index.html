@@ -4,6 +4,7 @@
 	<title>Tickle.js</title>
 	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 	<link rel="stylesheet" href="http://cdn.jsdelivr.net/foundation/4.1.2/css/foundation.min.css"/>
+	<link rel="stylesheet" href="animals.css"/>
 	<script src="jquery.tickle.js"></script>
 	<style>
 	#container {
@@ -19,23 +20,64 @@
 <body>
 	<div class="row">
 		<div class="large-12 columns">
-			<h1>Tickle Prototype</h1>
-			<h4 id="count"></h4>
+			<h1>Tickle.js</h1>
+			<p>Animals turn blue when they're tickled. Give it a try! (Remember to hold the mouse down while you tickle them) <br/><small>Animals provided by <a href="http://www.paranoida.com/experiments/css-animals">Paranoida.com</a></small> </p>
+
 			<a href="#" id="reset" class="button">Reset</a>
-			<img src="elmo.gif" id="elmo" alt="Tickle me elmo!" />
+
+			<div class="animals-list row">
+				<div class="large-4 columns">
+					<div class="animal bird">
+						<div class="eye"></div>
+						<div class="body"></div>
+						<div class="wing"></div>
+						<div class="beak-up"></div>
+						<div class="beak-down"></div>
+					</div>
+				</div>
+				<div class="large-4 columns">
+					<div class="animal penguin">
+						<div class="eye"></div>
+						<div class="head">
+							<div class="head-fix"></div>
+						</div>
+						<div class="body"></div>
+						<div class="body-black"></div>
+						<div class="foot"></div>
+						<div class="beak-up"></div>
+						<div class="beak-down"></div>
+					</div>
+				</div>
+				<div class="large-4 columns">
+					<div class="animal wale">
+						<div class="body"></div>
+						<div class="tummy"></div>
+						<div class="eye"></div>
+						<div class="fin"></div>
+						<div class="flappers">
+							<div class="left"></div>
+							<div class="right"></div>
+						</div>
+						<div class="flappers-small">
+							<div class="left"></div>
+							<div class="right"></div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 
 	</div>
 	<script>
-	$('#elmo').tickle(function(){
-		$(this).slideUp(function(){
-			$("#count").text("Tickled!")
-		});
-
+	$('.animal').tickle(function(){
+		$(this).find('div').css('background-color','lightBlue');
+		$(this).find('div.eye').css('border','1em solid blue');
+		$("#count").text("Tickled!")
 	}, { time: 1000, count: 7 });
 
 	$('#reset').click(function(){
-		$('#elmo').slideDown();
+		$('.animal').find('div').attr('style','');
+		$('.animal').find('div.eye').attr('style','');
 	});
 	</script>
 </body>
