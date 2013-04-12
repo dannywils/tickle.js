@@ -11,6 +11,10 @@ the direction has changed by a specified max angle
 a specified number of times 
 within a specified amount of time.
 
+### Demo
+
+You can view a live demo at [tickle.dannywilson.ca](http://tickle.dannywilson.ca).
+
 
 ### How to use
 
