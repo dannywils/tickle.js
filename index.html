@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tickle.js</title>
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<link rel="stylesheet" href="http://cdn.jsdelivr.net/foundation/4.1.2/css/foundation.min.css"/>
+	<script src="jquery.tickle.js"></script>
+	<style>
+	#container {
+		background-color:blue;
+		color:white;
+		font-size:5em;
+		width:100%;
+		height:500px;
+	}
+	</style>
+</script>
+</head>
+<body>
+	<div class="row">
+		<div class="large-12 columns">
+			<h1>Tickle Prototype</h1>
+			<div id="container">
+				Changes: <span id="count"></span>
+			</div>
+		</div>
+	</div>
+	<script>
+	$('#container').tickle(function(){
+		$(this).css('background-color','red');
+	}, { time: 750, count: 5 });
+
+
+	$('#container').click(function(){
+		$(this).css('background-color','blue');
+	});
+	</script>
+</body>
+</html>
