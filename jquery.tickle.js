@@ -31,31 +31,31 @@
 		new_direction = 135;
 	}
 	else if (e.pageX > oldx && e.pageY < oldy) {
-		//new_direction="top-right";
+		//"top-right";
 		new_direction = 45;
 	}
 	else if (e.pageX < oldx && e.pageY < oldy) {
-		//new_direction="top-left";
+		//"top-left";
 		new_direction = 315;
 	}
 	else if (e.pageX < oldx && e.pageY > oldy) {
-		//new_direction="bottom-left";
+		//"bottom-left";
 		new_direction = 225;
 	}
 	else if (e.pageX > oldx && e.pageY == oldy) {
-		//new_direction="right";
+		//"right";
 		new_direction = 90;
 	}
 	else if (e.pageX == oldx && e.pageY > oldy) {
-		//new_direction="down";
+		//"down";
 		new_direction = 180;
 	}
 	else if (e.pageX == oldx && e.pageY < oldy) {
-		//new_direction="up";
+		//"up";
 		new_direction = 0;
 	}
 	else if (e.pageX < oldx && e.pageY == oldy) {
-		//new_direction="left";
+		//"left";
 		new_direction = 270;
 	}
 
@@ -69,11 +69,9 @@
 		});
 	}
 	direction = new_direction;
-	// set new mY after doing test above
-	//console.log(settings);
+
 	oldx=e.pageX;
 	oldy=e.pageY;
-	$('#count').text(count);
 	if (count > settings.count) {
 		handler.call(this, e);
 		reset();
