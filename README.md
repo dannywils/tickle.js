@@ -30,6 +30,7 @@ Tickle has two argument, the callback function, and an options object that allow
 * count: The number of times the direction must change before the event is fired.
 * time: The amount of time in milliseconds before the count is reset.
 * canLeave: Determines if the mouse can leave the element and continue the count.
+* requireClick: Require the user to hold the mouse down in order to tickle the target
 
 ```javascript
 $('#container').tickle(
@@ -40,7 +41,8 @@ $('#container').tickle(
   time: 750,
   count: 5,
   time: 1000,
-  canLeave: false
+  canLeave: false,
+  requireClick: true
   }
 );
 ```
