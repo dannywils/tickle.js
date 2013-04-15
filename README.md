@@ -7,7 +7,7 @@ website easter eggs, and more!
 
 ## Installation
 
-Include script *after* the jQuery library (unless you are packaging scripts somehow else):
+Include script *after* the jQuery library:
 
 ```html
 <script src="/path/to/jquery.tickle.js"></script>
