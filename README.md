@@ -2,7 +2,7 @@ tickle.js
 =========
 
 A jQuery plugin for tickling DOM elements. 
-Tickle can be used for shake gesture recognition, cratching virtual lottery tickets, 
+Tickle can be used for shake gesture recognition, scratching virtual lottery tickets, 
 website easter eggs, and more!
 
 ## Documentation
