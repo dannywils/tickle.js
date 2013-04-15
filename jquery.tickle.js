@@ -1,104 +1,118 @@
-(function ($) {
+/*
+ * tickle.js
+ * jQuery Tickle Plugin
+ * https://github.com/dannywils/tickle.js
+ *
+ * Copyright 2013 Danny Wilson
+ * dannywilson.ca
+ * Released under the MIT license
+ */
+ (function ($) {
 	$.fn.tickle = function (handler, options) {
 
-		var settings = $.extend({
+		//set some default options
+		var defaultOptions = {
 			angle: 90,
 			count: 4,
 			time: 1000,
-			canLeave: false,
-			requireClick: true
+			canLeave: true,
+			requireClick: false,
+			preventDrag: true
+		};
 
-		}, options);
+		var settings = $.extend({}, defaultOptions, options);
 
-		function angleDiff(a,b){
-			var d = Math.abs(a - b) % 360;
-			var r = d > 180 ? 360 - d : d;
-			var diff = r;
-			return Math.abs(diff);
+		//get the minimum difference between angles a and b on a circle
+		function angleDiff(a, b) {
+			var c = Math.abs(a - b) % 360;
+			return c > 180 ? 360 - c : c;
 		}
 
-		function reset(){
+		//global variables
+		var oldx, oldy, count, oldDirection, timer, clicking;
+
+		//reset tracking variables
+		function reset() {
 			oldx = 0;
 			oldy = 0;
 			count = 0;
-			direction = 0
+			oldDirection = 0
 			timer = new Date().getTime();
 		}
-
-		var oldx, oldy, count, direction, timer;
 		reset();
 
-		var clicking = !settings.requireClick;
 
-		if(settings.requireClick){
-			this.on('dragstart', function(event) { event.preventDefault(); });
-			this.mousedown(function(){
-				clicking = true;
-			})
-			this.mouseup(function(){
-				clicking = false;
-			})
-			this.mousemove(function(){
-
+		//prevent dragging the element
+		if (settings.preventDrag) {
+			this.on('dragstart', function (event) {
+				event.preventDefault();
 			});
 		}
 
+		//reset if the mouse leaves the element
+		if (!settings.canLeave) {
+			$(this).on('mouseleave', function () {
+				reset();
+			});
+		}
+
+		//check for mouse down
+		if (settings.requireClick) {
+			this.mousedown(function () {
+				clicking = true;
+			})
+			this.mouseup(function () {
+				clicking = false;
+			})
+		}
+
 		return this.mousemove(function (e) {
-			if(clicking == false) return;
+			if (settings.requireClick && !clicking) return;
 			if (e.pageX > oldx && e.pageY > oldy) {
 				//bottom-right
-				new_direction = 135;
-			}
-			else if (e.pageX > oldx && e.pageY < oldy) {
-				//"top-right";
-				new_direction = 45;
-			}
-			else if (e.pageX < oldx && e.pageY < oldy) {
-				//"top-left";
-				new_direction = 315;
-			}
-			else if (e.pageX < oldx && e.pageY > oldy) {
-				//"bottom-left";
-				new_direction = 225;
-			}
-			else if (e.pageX > oldx && e.pageY == oldy) {
-				//"right";
-				new_direction = 90;
-			}
-			else if (e.pageX == oldx && e.pageY > oldy) {
-				//"down";
-				new_direction = 180;
-			}
-			else if (e.pageX == oldx && e.pageY < oldy) {
-				//"up";
-				new_direction = 0;
-			}
-			else if (e.pageX < oldx && e.pageY == oldy) {
-				//"left";
-				new_direction = 270;
+				direction = 135;
+			} else if (e.pageX > oldx && e.pageY < oldy) {
+				//top-right
+				direction = 45;
+			} else if (e.pageX < oldx && e.pageY < oldy) {
+				//top-left
+				direction = 315;
+			} else if (e.pageX < oldx && e.pageY > oldy) {
+				//bottom-left
+				direction = 225;
+			} else if (e.pageX > oldx && e.pageY == oldy) {
+				//right
+				direction = 90;
+			} else if (e.pageX == oldx && e.pageY > oldy) {
+				//down
+				direction = 180;
+			} else if (e.pageX == oldx && e.pageY < oldy) {
+				//up
+				direction = 0;
+			} else if (e.pageX < oldx && e.pageY == oldy) {
+				//left
+				direction = 270;
 			}
 
-			var a = angleDiff(direction, new_direction);
-			if (Math.abs(a) > settings.angle) {
-				count++;
+			//reset if the timer is up
+			if (new Date().getTime() > timer + settings.time) {
+				reset();
 			}
-			if(!settings.canLeave){
-				$(this).on('mouseenter mouseleave', function(){
-					reset();
-				});
-			}
-			direction = new_direction;
 
-			oldx=e.pageX;
-			oldy=e.pageY;
-			$("#count").text(count);
+			//call the handler when the count is enough
 			if (count > settings.count) {
 				handler.call(this, e);
 				reset();
 			}
-			if (new Date().getTime() > timer + settings.time) {
-				reset();
+
+			//increment the count if direction has changed
+			if (angleDiff(oldDirection, direction) > settings.angle) {
+				count++;
 			}
+
+			oldDirection = direction;
+			oldx = e.pageX;
+			oldy = e.pageY;
 		});
 	};
 })(jQuery);
