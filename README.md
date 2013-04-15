@@ -1,7 +1,9 @@
 tickle.js
 =========
 
-A jQuery plugin for tickling your DOM elements. 
+A jQuery plugin for tickling DOM elements. 
+Tickle can be used for shake gesture recognition, cratching virtual lottery tickets, 
+website easter eggs, and more!
 
 ## Documentation
 
@@ -36,13 +38,11 @@ Tickle has two argument, the callback function, and an options object that allow
 $('#container').tickle(
   function(){
     $(this).css('background-color','red');
-  }, 
-  { 
-  time: 750,
-  count: 5,
-  time: 1000,
-  canLeave: false,
-  requireClick: true
+  },{
+    count: 5,
+    time: 1000,
+    canLeave: false,
+    requireClick: true
   }
 );
 ```
