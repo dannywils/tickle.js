@@ -13,10 +13,10 @@
 		//set some default options
 		var defaultOptions = {
 			angle: 90,
-			count: 4,
+			count: 5,
 			time: 1000,
-			canLeave: true,
-			requireClick: false,
+			canLeave: false,
+			requireClick: true,
 			preventDrag: true
 		};
 
