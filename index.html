@@ -34,6 +34,25 @@
 Tickle can be used for shake gesture recognition, scratching virtual lottery tickets,
 website easter eggs, and more!</p>
 
+<h2>Demo</h2>
+
+<strong>Tickle the cat!</strong>
+<img src="images/1.png" id="demo" alt="Tickle me!"/>
+<p>Hold down the mouse and shake to tickle. <small><a href="http://www.youtube.com/watch?v=0Bmhjf0rKe8">Image source</a></small></p>
+<strong>Demo source</strong>
+<div class="highlight"><pre>
+<span class="nx">$</span><span class="p">(</span><span class="s1">'img#demo'</span><span class="p">).</span><span class="nx">tickle</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+	<span class="nx">$this</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+	<span class="nx">$this</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">src</span> <span class="o">=</span> <span class="s1">'images/2.png'</span><span class="p">;</span>
+	<span class="c1">//after 1 second reset the image</span>
+	<span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+		<span class="nx">$this</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">src</span> <span class="o">=</span> <span class="s1">'images/1.png'</span><span class="p">;</span>
+	<span class="p">},</span><span class="mi">1000</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+
+
 <h2>Installation</h2>
 
 <p>Include script <em>after</em> the jQuery library:</p>
@@ -51,24 +70,6 @@ A tickle event is defined as movement of the mouse where
 the direction has changed by a specified max angle
 a specified number of times
 within a specified amount of time.</p>
-
-<h3>Demo</h3>
-
-<strong>Tickle the cat!</strong>
-<img src="images/1.png" id="demo" alt="Tickle me!"/>
-<p>Hold down the mouse and shake to tickle. <small><a href="http://www.youtube.com/watch?v=0Bmhjf0rKe8">Image source</a></small></p>
-<strong>Demo source</strong>
-<div class="highlight"><pre>
-<span class="nx">$</span><span class="p">(</span><span class="s1">'img#demo'</span><span class="p">).</span><span class="nx">tickle</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
-	<span class="nx">$this</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
-	<span class="nx">$this</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">src</span> <span class="o">=</span> <span class="s1">'images/2.png'</span><span class="p">;</span>
-	<span class="c1">//after 1 second reset the image</span>
-	<span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
-		<span class="nx">$this</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">src</span> <span class="o">=</span> <span class="s1">'images/1.png'</span><span class="p">;</span>
-	<span class="p">},</span><span class="mi">1000</span><span class="p">);</span>
-<span class="p">});</span>
-</pre></div>
-
 
 
 <h3>How to use</h3>
@@ -121,14 +122,19 @@ within a specified amount of time.</p>
     </div>
     <script src="javascripts/jquery.tickle.js"></script>
     <script>
+   		 var done = true;
     	$('img#demo').tickle(function(){
-    		$this = $(this);
-    		$this[0].src = 'images/2.png';
+    		if(done){
+    			$this = $(this);
+    			$this[0].src = 'images/2.png';
+    			done = false;
+    		}
     		//after 1 second reset the image
     		setTimeout(function(){
+    			done = true;
     			$this[0].src = 'images/1.png';
     		},1000);
-    	});
+    	}, { count: 5 });
     </script>
   </body>
 </html>
