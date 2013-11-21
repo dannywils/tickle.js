@@ -7,20 +7,29 @@
  * dannywilson.ca
  * Released under the MIT license
  */
+ /*global jQuery*/
+ /*jslint browser: true, plusplus: true, white: true */
  (function ($) {
+ 	"use strict";
 	$.fn.tickle = function (handler, options) {
-
-		//set some default options
+		//set some default options and 	global variables
 		var defaultOptions = {
+			//the minimum angle that the user must drag in order to
+			//continue to count towards the streak
 			angle: 90,
+			//the number of angle changes required to fire the event
 			count: 5,
+			//the amount of time that can pass before the count resets
 			time: 1000,
+			//if the cursor leaves the DOM element, reset the count
 			canLeave: false,
+			//require the user to hold the mouse button down while tickling
 			requireClick: true,
+			//prevent dragging of elements
 			preventDrag: true
-		};
+		}, settings = $.extend({}, defaultOptions, options),
+		oldx, oldy, count, direction, oldDirection, timer, clicking;
 
-		var settings = $.extend({}, defaultOptions, options);
 
 		//get the minimum difference between angles a and b on a circle
 		function angleDiff(a, b) {
@@ -28,19 +37,16 @@
 			return c > 180 ? 360 - c : c;
 		}
 
-		//global variables
-		var oldx, oldy, count, oldDirection, timer, clicking;
+	
 
 		//reset tracking variables
 		function reset() {
-			oldx = 0;
-			oldy = 0;
-			count = 0;
-			oldDirection = 0
+			oldx = oldy = count = oldDirection = 0;
 			timer = new Date().getTime();
 		}
+		
+		//call reset immediately to set variables 
 		reset();
-
 
 		//prevent dragging the element
 		if (settings.preventDrag) {
@@ -51,23 +57,23 @@
 
 		//reset if the mouse leaves the element
 		if (!settings.canLeave) {
-			$(this).on('mouseleave', function () {
-				reset();
-			});
+			this.mouseleave(reset);
 		}
 
 		//check for mouse down
 		if (settings.requireClick) {
 			this.mousedown(function () {
 				clicking = true;
-			})
+			});
 			this.mouseup(function () {
 				clicking = false;
-			})
+			});
 		}
 
 		return this.mousemove(function (e) {
-			if (settings.requireClick && !clicking) return;
+			if (settings.requireClick && !clicking) {
+				return;
+			}
 			if (e.pageX > oldx && e.pageY > oldy) {
 				//bottom-right
 				direction = 135;
@@ -80,16 +86,16 @@
 			} else if (e.pageX < oldx && e.pageY > oldy) {
 				//bottom-left
 				direction = 225;
-			} else if (e.pageX > oldx && e.pageY == oldy) {
+			} else if (e.pageX > oldx && e.pageY === oldy) {
 				//right
 				direction = 90;
-			} else if (e.pageX == oldx && e.pageY > oldy) {
+			} else if (e.pageX === oldx && e.pageY > oldy) {
 				//down
 				direction = 180;
-			} else if (e.pageX == oldx && e.pageY < oldy) {
+			} else if (e.pageX === oldx && e.pageY < oldy) {
 				//up
 				direction = 0;
-			} else if (e.pageX < oldx && e.pageY == oldy) {
+			} else if (e.pageX < oldx && e.pageY === oldy) {
 				//left
 				direction = 270;
 			}
@@ -115,4 +121,4 @@
 			oldy = e.pageY;
 		});
 	};
-})(jQuery);
+}(jQuery));
